@@ -1,0 +1,58 @@
+{
+  "fields": [
+    {
+      "name": "question_id",
+      "type": "integer#unsigned"
+    },
+    {
+      "name": "answer_id",
+      "type": "integer#unsigned"
+    },
+
+    {
+      "name": "user_id",
+      "type": "integer#unsigned"
+    },
+    {
+      "name": "response",
+      "type": "text"
+    }
+  ],
+  "foreign_keys": [
+    {
+      "column": "question_id",
+      "references": "id",
+      "on": "question",
+      "onDelete": "cascade"
+    },
+    {
+      "column": "answer_id",
+      "references": "id",
+      "on": "answer",
+      "onDelete": "cascade"
+    },
+    {
+      "column": "user_id",
+      "references": "id",
+      "on": "users",
+      "onDelete": "cascade"
+    }
+  ],
+  "relationships": [
+    {
+      "name": "user",
+      "type": "belongsTo",
+      "class": "App\\User"
+    },
+    {
+      "name": "question",
+      "type": "hasMany",
+      "class": "App\\Question"
+    },
+    {
+      "name": "asnwer",
+      "type": "hasMany",
+      "class": "App\\Answer"
+    }
+  ]
+ }

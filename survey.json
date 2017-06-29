@@ -1,0 +1,43 @@
+{
+  "fields": [
+    {
+      "name": "title",
+      "type": "string"
+    },
+    {
+      "name": "description",
+      "type": "text"
+    },
+
+    {
+      "name": "user_id",
+      "type": "integer#unsigned"
+    }
+  ],
+  "foreign_keys": [
+    {
+      "column": "user_id",
+      "references": "id",
+      "on": "users",
+      "onDelete": "cascade"
+    }
+  ],
+  "relationships": [
+    {
+      "name": "user",
+      "type": "belongsTo",
+      "class": "App\\User"
+    },
+    {
+      "name": "question",
+      "type": "hasMany",
+      "class": "App\\Question"
+    }
+  ],
+  "validations": [
+    {
+      "field": "title",
+      "rules": "required|max:10"
+    }
+  ]
+}

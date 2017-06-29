@@ -1,0 +1,34 @@
+{
+  "fields": [
+    {
+      "name": "answer",
+      "type": "text"
+    },
+
+    {
+      "name": "question_id",
+      "type": "integer#unsigned"
+    }
+  ],
+  "foreign_keys": [
+    {
+      "column": "question_id",
+      "references": "id",
+      "on": "question",
+      "onDelete": "cascade"
+    }
+  ],
+  "relationships": [
+    {
+      "name": "question",
+      "type": "belongsTo",
+      "class": "App\\Question"
+    }
+  ],
+  "validations": [
+    {
+      "field": "answer",
+      "rules": "required"
+    }
+  ]
+}

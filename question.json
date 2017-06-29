@@ -1,0 +1,43 @@
+{
+  "fields": [
+    {
+      "name": "question_text",
+      "type": "string"
+    },
+    {
+      "name": "question_type",
+      "type": "select"
+    },
+
+    {
+      "name": "survey_id",
+      "type": "integer#unsigned"
+    }
+  ],
+  "foreign_keys": [
+    {
+      "column": "survey_id",
+      "references": "id",
+      "on": "survey",
+      "onDelete": "cascade"
+    }
+  ],
+  "relationships": [
+    {
+      "name": "survey",
+      "type": "belongsTo",
+      "class": "App\\Survey"
+    },
+    {
+      "name": "answer",
+      "type": "hasMany",
+      "class": "App\\Answer"
+    }
+  ],
+  "validations": [
+    {
+      "field": "question_text",
+      "rules": "required"
+    }
+  ]
+}
