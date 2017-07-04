@@ -17,6 +17,7 @@
         {!! Form::number('survey_id', null, ['class' => 'form-control']) !!}
         {!! $errors->first('survey_id', '<p class="help-block">:message</p>') !!}
     </div>
+
 </div>
 
 <div class="form-group">
