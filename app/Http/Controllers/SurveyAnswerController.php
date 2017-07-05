@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-
+use App\Survey;
 use App\SurveyAnswer;
 use Illuminate\Http\Request;
 use Session;
+use DB;
 
 class SurveyAnswerController extends Controller
 {
@@ -111,6 +113,25 @@ class SurveyAnswerController extends Controller
 
         return redirect('survey-answer');
     }
+
+    public function takesurvey($id)
+    {
+        $user = Auth::user();
+
+        /* $userrole = DB::table('users')
+             ->leftJoin('role_user', 'role_user.user_id', '=', 'users.id')
+             ->leftJoin('roles', 'roles.id', '=', 'role_user.role_id')
+             ->where('users.id', '=', $user);*/
+
+
+        $survey = DB::table('surveys')
+            ->join('questions', 'surveys.id', '=', 'questions.survey_id')
+            ->get();
+
+
+        return view('admin/survey/take', ['survey' => $survey[0]]);
+    }
+
 
     /**
      * Remove the specified resource from storage.

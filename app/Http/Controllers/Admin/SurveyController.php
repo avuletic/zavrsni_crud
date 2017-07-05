@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use Illuminate\Support\Facades\Auth;
 use App\Survey;
 use Illuminate\Http\Request;
 use Session;
+use DB;
 
 class SurveyController extends Controller
 {
@@ -114,6 +115,8 @@ class SurveyController extends Controller
 
         return redirect('admin/survey');
     }
+
+
 
     /**
      * Remove the specified resource from storage.
