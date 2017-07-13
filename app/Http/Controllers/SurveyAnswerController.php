@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests;
+use App\Question;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Survey;
@@ -116,7 +117,19 @@ class SurveyAnswerController extends Controller
 
     public function takesurvey($id)
     {
+
         $user = Auth::user();
+
+        //podaci za anketu
+        $survey = Survey::findOrFail($id);
+        //lista pitanja za anketu
+        $questions = Survey::find($id)->questions;
+        //lista ponudjenih odgovora na pitanje
+        $answers = Question::find($id)->answers;
+        return view('admin/survey/take',compact('survey','answers','questions'));
+
+    }
+
 
         /* $userrole = DB::table('users')
              ->leftJoin('role_user', 'role_user.user_id', '=', 'users.id')
@@ -124,13 +137,20 @@ class SurveyAnswerController extends Controller
              ->where('users.id', '=', $user);*/
 
 
-        $survey = DB::table('surveys')
+        /*$survey = DB::table('surveys')
             ->join('questions', 'surveys.id', '=', 'questions.survey_id')
-            ->get();
+            ->select('questions.*')
+            ->get()*/
 
 
-        return view('admin/survey/take', ['survey' => $survey[0]]);
-    }
+        /*$answer = DB::table('answers')
+            ->leftJoin('questions', 'questions.id', '=', 'answers.question_id')
+            ->union($survey)
+            ->get();*/
+
+
+/*        return view('admin/survey/take', ['survey' => $survey[0]]);*/
+
 
 
     /**

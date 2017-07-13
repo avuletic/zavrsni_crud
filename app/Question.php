@@ -27,12 +27,12 @@ class Question extends Model
      */
     protected $fillable = ['question_text', 'question_type', 'survey_id'];
 
-    public function survey()
+    public function surveys()
     {
         return $this->belongsTo('App\Survey');
     }
 
-    public function answer()
+    public function answers()
     {
         return $this->hasMany('App\Answer');
     }

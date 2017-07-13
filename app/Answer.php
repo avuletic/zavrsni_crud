@@ -27,7 +27,7 @@ class Answer extends Model
      */
     protected $fillable = ['answer', 'question_id'];
 
-    public function question()
+    public function questions()
 	{
 		return $this->belongsTo('App\Question');
 	}
