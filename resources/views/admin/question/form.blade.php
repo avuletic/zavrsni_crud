@@ -12,7 +12,7 @@
         {!! $errors->first('question_type', '<p class="help-block">:message</p>') !!}
     </div>
 </div><div class="form-group {{ $errors->has('survey_id') ? 'has-error' : ''}}">
-    {!! Form::label('survey_id', 'Survey Id', ['class' => 'col-md-4 control-label']) !!}
+    {!! Form::label('survey_id','Survey Id', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
         {!! Form::number('survey_id', null, ['class' => 'form-control']) !!}
         {!! $errors->first('survey_id', '<p class="help-block">:message</p>') !!}

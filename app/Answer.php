@@ -31,5 +31,9 @@ class Answer extends Model
 	{
 		return $this->belongsTo('App\Question');
 	}
-	
+
+	/*public function surveys()
+    {
+        return $this->belongsTo('App\Survey');
+    }*/
 }

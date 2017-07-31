@@ -36,5 +36,10 @@ class Survey extends Model
     {
         return $this->hasMany('App\Question');
     }
+
+    public function answers()
+    {
+        return $this->hasManyThrough('App\Answer', 'App\Question','survey_id','question_id', 'id');
+    }
     
 }

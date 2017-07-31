@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Answer;
 use App\Http\Requests;
 use App\Question;
 use Illuminate\Support\Facades\Auth;
@@ -120,38 +121,23 @@ class SurveyAnswerController extends Controller
 
         $user = Auth::user();
 
+
         //podaci za anketu
         $survey = Survey::findOrFail($id);
         //lista pitanja za anketu
         $questions = Survey::find($id)->questions;
+        //lista odgovora na pitanja
+        $answers = $survey->answers;
+        //id pitanja
+        /*$dd = $questions->pluck('id')->toArray();*/
+
         //lista ponudjenih odgovora na pitanje
-        $answers = Question::find($id)->answers;
+        /*$answers = Question::find(2)->answers;*/
+
+        /*dd($answers);*/
         return view('admin/survey/take',compact('survey','answers','questions'));
 
     }
-
-
-        /* $userrole = DB::table('users')
-             ->leftJoin('role_user', 'role_user.user_id', '=', 'users.id')
-             ->leftJoin('roles', 'roles.id', '=', 'role_user.role_id')
-             ->where('users.id', '=', $user);*/
-
-
-        /*$survey = DB::table('surveys')
-            ->join('questions', 'surveys.id', '=', 'questions.survey_id')
-            ->select('questions.*')
-            ->get()*/
-
-
-        /*$answer = DB::table('answers')
-            ->leftJoin('questions', 'questions.id', '=', 'answers.question_id')
-            ->union($survey)
-            ->get();*/
-
-
-/*        return view('admin/survey/take', ['survey' => $survey[0]]);*/
-
-
 
     /**
      * Remove the specified resource from storage.

@@ -13,32 +13,41 @@
                     </div>
                 </div>
                 <body>
+
                 @foreach ($questions as $question)
 
                     <div class="panel panel-default">
                         <div class="panel-heading">{{ $question->question_text }}</div>
-
                         <div class="panel-body">
+                            {{--@foreach ($question_answers as $question_answer)--}}
+
                             @if($question->question_type == 'textarea')
                                 <div class="form-group">
                                     <label for="comment">Odgovor:</label>
                                     <textarea class="form-control" rows="5" id="comment"></textarea>
                                 </div>
-                                @elseif($question->question_type =='checkbox')
 
-                                @foreach($answers as $answer)
-                                <div class="checkbox">
+                            @elseif($question->question_type =='checkbox')
+                                {{--{{print_r($answers)}}--}}
+                                {{--{{var_dump($answers)}}--}}
 
-                                    <label><input type="checkbox" value="">{{ $answer->answer }}</label>
-
-                                </div>
+                              @foreach ($answers as $answer) {
+                                {{$answer->answer}};
+                                }
                                 @endforeach
 
-                            @elseif($question->question_type =='radio')
+
+                                    {{--{{ Form::checkbox('answer[]', $answer->id, in_array($answer->id, $answer)) }}
+                                    {{ Form::label('answer', $answer->answer) }}<br>--}}
+
+
+
+                            {{--@elseif($question->question_type =='radio')
                                 <div class="radio">
                                     <label><input type="radio" name="optradio">Option 1</label>
-                                </div>
+                                </div>--}}
                             @endif
+                                {{--@endforeach--}}
                         </div>
                     </div>
                 @endforeach
