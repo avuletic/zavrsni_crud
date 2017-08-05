@@ -13,43 +13,48 @@
                     </div>
                 </div>
                 <body>
-
                 @foreach ($questions as $question)
 
                     <div class="panel panel-default">
                         <div class="panel-heading">{{ $question->question_text }}</div>
                         <div class="panel-body">
-                            {{--@foreach ($question_answers as $question_answer)--}}
 
                             @if($question->question_type == 'textarea')
-                                <div class="form-group">
-                                    <label for="comment">Odgovor:</label>
-                                    <textarea class="form-control" rows="5" id="comment"></textarea>
-                                </div>
-
-                            @elseif($question->question_type =='checkbox')
-                                {{--{{print_r($answers)}}--}}
-                                {{--{{var_dump($answers)}}--}}
-
-                              @foreach ($answers as $answer) {
-                                {{$answer->answer}};
-                                }
-                                @endforeach
-
-
-                                    {{--{{ Form::checkbox('answer[]', $answer->id, in_array($answer->id, $answer)) }}
-                                    {{ Form::label('answer', $answer->answer) }}<br>--}}
-
-
-
-                            {{--@elseif($question->question_type =='radio')
-                                <div class="radio">
-                                    <label><input type="radio" name="optradio">Option 1</label>
-                                </div>--}}
+                                <textarea rows="4" cols="50">
+At w3schools.com you will learn how to make a website. We offer free tutorials in all web development technologies.
+</textarea>
                             @endif
-                                {{--@endforeach--}}
+
+                            @foreach($question->answers as $answer)
+                                @if($question->question_type =='checkbox')
+
+
+                                    <tr>
+                                        <td>{{$answer->answer}}</td>
+                                        <td style="width: 10px">
+                                            <input type="checkbox" value="{{ $answer->answer }}"
+                                                   name="answers[{{ $answer->id }}">
+                                        </td>
+                                    </tr>
+                                @else
+
+
+                                    <tr>
+                                        <td>{{$answer->answer}}</td>
+                                        <td style="width: 10px">
+                                            <input type="radio" value="{{ $answer->answer }}"
+                                                   name="answers[{{ $answer->id }}">
+                                        </td>
+                                    </tr>
+
+
+
+
+                                @endif
+                            @endforeach
                         </div>
                     </div>
+
                 @endforeach
                 </body>
 

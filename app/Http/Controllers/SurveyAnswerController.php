@@ -123,19 +123,31 @@ class SurveyAnswerController extends Controller
 
 
         //podaci za anketu
-        $survey = Survey::findOrFail($id);
+       $survey = Survey::findOrFail($id);
         //lista pitanja za anketu
         $questions = Survey::find($id)->questions;
         //lista odgovora na pitanja
         $answers = $survey->answers;
-        //id pitanja
-        /*$dd = $questions->pluck('id')->toArray();*/
+        /*$questions = DB::table('questions')
+                    ->leftJoin('answers','questions.id', '=', 'answers.question_id')
+                    ->where('questions.survey_id', '=', $survey->id)
+                    ->get();*/
+        //$questions = Survey::find($id)->with('questions','answers')->get();
 
-        //lista ponudjenih odgovora na pitanje
-        /*$answers = Question::find(2)->answers;*/
 
-        /*dd($answers);*/
-        return view('admin/survey/take',compact('survey','answers','questions'));
+
+
+
+        //lista anketa, pitanja i odgovora
+       // $questions = Survey::findOrFail($id)->with('questions','answers')->get();
+       //dd($answers);
+        /*$answers = DB::table('questions')
+            ->rightJoin('answers','answers.question_id', '=', 'question_id')
+            ->whereIn('survey_id',[$id])
+            ->get();*/
+
+
+        return view('admin/survey/take',compact('survey','questions','answers'));
 
     }
 
