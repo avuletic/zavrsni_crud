@@ -5,7 +5,7 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-md-4 ">
+            <div class="col-md-4">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">
@@ -20,14 +20,12 @@
                         <div class="panel-body">
 
                             @if($question->question_type == 'textarea')
-                                <textarea rows="4" cols="50">
-At w3schools.com you will learn how to make a website. We offer free tutorials in all web development technologies.
-</textarea>
+                                <div class="h6">Odgovor:</div>
+                                <textarea class="field" name="notes" cols="40" rows="5"></textarea>
                             @endif
 
                             @foreach($question->answers as $answer)
                                 @if($question->question_type =='checkbox')
-
 
                                     <tr>
                                         <td>{{$answer->answer}}</td>
@@ -38,7 +36,6 @@ At w3schools.com you will learn how to make a website. We offer free tutorials i
                                     </tr>
                                 @else
 
-
                                     <tr>
                                         <td>{{$answer->answer}}</td>
                                         <td style="width: 10px">
@@ -47,15 +44,13 @@ At w3schools.com you will learn how to make a website. We offer free tutorials i
                                         </td>
                                     </tr>
 
-
-
-
                                 @endif
                             @endforeach
                         </div>
                     </div>
 
                 @endforeach
+                <input class="btn" type="submit" value="Predaj anketu!">
                 </body>
 
             </div>

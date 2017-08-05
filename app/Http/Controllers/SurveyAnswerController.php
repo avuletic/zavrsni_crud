@@ -132,19 +132,14 @@ class SurveyAnswerController extends Controller
                     ->leftJoin('answers','questions.id', '=', 'answers.question_id')
                     ->where('questions.survey_id', '=', $survey->id)
                     ->get();*/
-        //$questions = Survey::find($id)->with('questions','answers')->get();
+        /*$questions = Survey::find($id)->with('questions','answers')->get();
+        $questions = Survey::findOrFail($id)->with('questions','answers')->get();
 
-
-
-
-
-        //lista anketa, pitanja i odgovora
-       // $questions = Survey::findOrFail($id)->with('questions','answers')->get();
-       //dd($answers);
-        /*$answers = DB::table('questions')
+        $answers = DB::table('questions')
             ->rightJoin('answers','answers.question_id', '=', 'question_id')
             ->whereIn('survey_id',[$id])
-            ->get();*/
+            ->get();
+        dd($answers);*/
 
 
         return view('admin/survey/take',compact('survey','questions','answers'));
