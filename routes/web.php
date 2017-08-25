@@ -36,4 +36,5 @@ Route::get('admin/generator', ['uses' => '\Appzcoder\LaravelAdmin\Controllers\Pr
 Route::post('admin/generator', ['uses' => '\Appzcoder\LaravelAdmin\Controllers\ProcessController@postGenerator']);
 Route::resource('survey-answer', 'SurveyAnswerController');
 
-Route::get('surveyanswer/{id}', 'SurveyAnswerController@takesurvey')->name('prikazisurvey');
+Route::get('surveyanswer/{id}', 'SurveyAnswerController@loadSurvey')->name('anketa');
+Route::post('surveyanswer','SurveyAnswerController@store')->name('storeanswers');

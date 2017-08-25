@@ -13,44 +13,36 @@
                     </div>
                 </div>
                 <body>
-                @foreach ($questions as $question)
+                {!! Form::open(array('action'=>array('SurveyAnswerController@store', $survey->id))) !!}
+                {{ csrf_field() }}
+                @forelse ($survey->questions as $key=>$question)
+                    <p class="flow-text">Pitanje {{ $key+1 }} - {{ $question->question_text }}</p>
+                    @if($question->question_type === 'textarea')
+                        <div class="input-field col s12">
+                            <textarea id="response"  name="{{ $question->id }}[response]"></textarea>
 
-                    <div class="panel panel-default">
-                        <div class="panel-heading">{{ $question->question_text }}</div>
-                        <div class="panel-body">
-
-                            @if($question->question_type == 'textarea')
-                                <div class="h6">Odgovor:</div>
-                                <textarea class="field" name="notes" cols="40" rows="5"></textarea>
-                            @endif
-
-                            @foreach($question->answers as $answer)
-                                @if($question->question_type =='checkbox')
-
-                                    <tr>
-                                        <td>{{$answer->answer}}</td>
-                                        <td style="width: 10px">
-                                            <input type="checkbox" value="{{ $answer->answer }}"
-                                                   name="answers[{{ $answer->id }}">
-                                        </td>
-                                    </tr>
-                                @else
-
-                                    <tr>
-                                        <td>{{$answer->answer}}</td>
-                                        <td style="width: 10px">
-                                            <input type="radio" value="{{ $answer->answer }}"
-                                                   name="answers[{{ $answer->id }}">
-                                        </td>
-                                    </tr>
-
-                                @endif
-                            @endforeach
                         </div>
-                    </div>
-
-                @endforeach
-                <input class="btn" type="submit" value="Predaj anketu!">
+                    @elseif($question->question_type === 'radio')
+                        @foreach($question->answers as $key=>$value)
+                            <p style="margin:0px; padding:0px;">
+                                <input type="radio" id="answer" name="{{ $question->id }}[answer_id]" value="{{$value->id}}" />
+                                <label for="answer{{$key}}">{{ $value['answer'] }}</label>
+                            </p>
+                        @endforeach
+                    @elseif($question->question_type === 'checkbox')
+                        @foreach($question->answers as $key=>$value)
+                            <p style="margin:0px; padding:0px;">
+                                <input type="checkbox" id="answers" name="{{ $question->id }}[answer_id]" value="{{$value->id}}" />
+                                <label for="answer{{$key}}">{{ $value['answer'] }}</label>
+                            </p>
+                        @endforeach
+                    @endif
+                    <div class="divider" style="margin:10px 10px;"></div>
+                @empty
+                    <span class='flow-text center-align'>Nothing to show</span>
+                @endforelse
+                {{ Form::submit('Submit Survey') }}
+                {!! Form::close() !!}
                 </body>
 
             </div>

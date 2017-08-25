@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Survey;
 use App\SurveyAnswer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use Session;
 use DB;
 
@@ -57,14 +58,39 @@ class SurveyAnswerController extends Controller
      */
     public function store(Request $request)
     {
-        
-        $requestData = $request->all();
-        
-        SurveyAnswer::create($requestData);
+        //TODO napravi storeanje odgovora
 
-        Session::flash('flash_message', 'SurveyAnswer added!');
+        $arr = $request->except('_token');
 
-        return redirect('survey-answer');
+
+        foreach ($arr as $key => $value) {
+
+            $newAnswer = new SurveyAnswer();
+            if (array_key_exists('response', $value)) {
+                $newValue = ($value['response']);
+
+                $newAnswer->response = $newValue;
+                $newAnswer->question_id = $key;
+                $newAnswer->user_id = Auth::id();
+
+                $newAnswer->save();
+
+                $answerArray[] = $newAnswer;
+            }
+            else {
+                $newValue = ($value['answer_id']);
+
+                $newAnswer->answer_id = $newValue;
+                $newAnswer->question_id = $key;
+                $newAnswer->user_id = Auth::id();
+
+                $newAnswer->save();
+
+                $answerArray[] = $newAnswer;
+            }
+        };
+
+        return redirect('admin');
     }
 
     /**
@@ -116,18 +142,18 @@ class SurveyAnswerController extends Controller
         return redirect('survey-answer');
     }
 
-    public function takesurvey($id)
+    public function loadSurvey($id)
     {
 
-        $user = Auth::user();
+
 
 
         //podaci za anketu
-       $survey = Survey::findOrFail($id);
+        $survey = Survey::findOrFail($id);
         //lista pitanja za anketu
-        $questions = Survey::find($id)->questions;
+        //$questions = Survey::find($id)->questions;
         //lista odgovora na pitanja
-        $answers = $survey->answers;
+        //$answers = $survey->answers;
         /*$questions = DB::table('questions')
                     ->leftJoin('answers','questions.id', '=', 'answers.question_id')
                     ->where('questions.survey_id', '=', $survey->id)
@@ -141,8 +167,7 @@ class SurveyAnswerController extends Controller
             ->get();
         dd($answers);*/
 
-
-        return view('admin/survey/take',compact('survey','questions','answers'));
+        return view('admin/survey/take',compact('survey'));
 
     }
 

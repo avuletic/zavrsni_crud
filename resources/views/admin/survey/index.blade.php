@@ -39,7 +39,7 @@
                                         <td>{{ $item->id }}</td>
                                         <td>{{ $item->title }}</td><td>{{ $item->description }}</td><td>{{ $item->user_id }}</td>
                                         <td>
-                                            <a href="{{route('prikazisurvey', ['id' => $item->id])}}" class="btn btn-default">Take survey</a>
+                                            <a href="{{route('anketa', ['id' => $item->id])}}" class="btn btn-default">Take survey</a>
                                             <a href="{{ url('/admin/survey/' . $item->id) }}" title="View Survey"><button class="btn btn-info btn-xs"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
                                             <a href="{{ url('/admin/survey/' . $item->id . '/edit') }}" title="Edit Survey"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
                                             {!! Form::open([
