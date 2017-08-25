@@ -20,7 +20,6 @@
                     @if($question->question_type === 'textarea')
                         <div class="input-field col s12">
                             <textarea id="response"  name="{{ $question->id }}[response]"></textarea>
-
                         </div>
                     @elseif($question->question_type === 'radio')
                         @foreach($question->answers as $key=>$value)

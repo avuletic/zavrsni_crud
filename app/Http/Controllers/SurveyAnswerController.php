@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Input;
 use Session;
 use DB;
 
+
 class SurveyAnswerController extends Controller
 {
     /**
@@ -62,31 +63,26 @@ class SurveyAnswerController extends Controller
 
         $arr = $request->except('_token');
 
-
         foreach ($arr as $key => $value) {
 
             $newAnswer = new SurveyAnswer();
-            if (array_key_exists('response', $value)) {
-                $newValue = ($value['response']);
+            /*if (array_key_exists('response', $value))*/
+            if (is_array($value) && array_key_exists('response',$value)){
 
+                $newValue = ($value['response']);
                 $newAnswer->response = $newValue;
                 $newAnswer->question_id = $key;
                 $newAnswer->user_id = Auth::id();
 
                 $newAnswer->save();
+            } else {
 
-                $answerArray[] = $newAnswer;
-            }
-            else {
                 $newValue = ($value['answer_id']);
-
                 $newAnswer->answer_id = $newValue;
                 $newAnswer->question_id = $key;
                 $newAnswer->user_id = Auth::id();
 
                 $newAnswer->save();
-
-                $answerArray[] = $newAnswer;
             }
         };
 
