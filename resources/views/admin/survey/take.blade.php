@@ -19,19 +19,13 @@
                     <p class="flow-text">Pitanje {{ $key+1 }} - {{ $question->question_text }}</p>
                     @if($question->question_type === 'textarea')
                         <div class="input-field col s12">
-                            <textarea id="response"  name="{{ $question->id }}[response]"></textarea>
+                            <textarea id="response" name="{{ $question->id }}[response]"></textarea>
                         </div>
                     @elseif($question->question_type === 'radio')
                         @foreach($question->answers as $key=>$value)
                             <p style="margin:0px; padding:0px;">
-                                <input type="radio" id="answer" name="{{ $question->id }}[answer_id]" value="{{$value->id}}" />
-                                <label for="answer{{$key}}">{{ $value['answer'] }}</label>
-                            </p>
-                        @endforeach
-                    @elseif($question->question_type === 'checkbox')
-                        @foreach($question->answers as $key=>$value)
-                            <p style="margin:0px; padding:0px;">
-                                <input type="checkbox" id="answers" name="{{ $question->id }}[answer_id]" value="{{$value->id}}" />
+                                <input type="radio" id="answer" name="{{ $question->id }}[answer_id]"
+                                       value="{{$value->id}}"/>
                                 <label for="answer{{$key}}">{{ $value['answer'] }}</label>
                             </p>
                         @endforeach

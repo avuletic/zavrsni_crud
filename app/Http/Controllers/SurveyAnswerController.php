@@ -29,10 +29,10 @@ class SurveyAnswerController extends Controller
 
         if (!empty($keyword)) {
             $surveyanswer = SurveyAnswer::where('question_id', 'LIKE', "%$keyword%")
-				->orWhere('answer_id', 'LIKE', "%$keyword%")
-				->orWhere('user_id', 'LIKE', "%$keyword%")
-				->orWhere('response', 'LIKE', "%$keyword%")
-				->paginate($perPage);
+                ->orWhere('answer_id', 'LIKE', "%$keyword%")
+                ->orWhere('user_id', 'LIKE', "%$keyword%")
+                ->orWhere('response', 'LIKE', "%$keyword%")
+                ->paginate($perPage);
         } else {
             $surveyanswer = SurveyAnswer::paginate($perPage);
         }
@@ -62,12 +62,11 @@ class SurveyAnswerController extends Controller
         //TODO napravi storeanje odgovora
 
         $arr = $request->except('_token');
-
         foreach ($arr as $key => $value) {
 
             $newAnswer = new SurveyAnswer();
-            /*if (array_key_exists('response', $value))*/
-            if (is_array($value) && array_key_exists('response',$value)){
+
+            if (!is_null($value) && array_key_exists('response', $value)) {
 
                 $newValue = ($value['response']);
                 $newAnswer->response = $newValue;
@@ -75,7 +74,7 @@ class SurveyAnswerController extends Controller
                 $newAnswer->user_id = Auth::id();
 
                 $newAnswer->save();
-            } else {
+            } elseif (!is_null($value) && array_key_exists('answer_id', $value)) {
 
                 $newValue = ($value['answer_id']);
                 $newAnswer->answer_id = $newValue;
@@ -92,7 +91,7 @@ class SurveyAnswerController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      *
      * @return \Illuminate\View\View
      */
@@ -106,7 +105,7 @@ class SurveyAnswerController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      *
      * @return \Illuminate\View\View
      */
@@ -120,16 +119,16 @@ class SurveyAnswerController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update($id, Request $request)
     {
-        
+
         $requestData = $request->all();
-        
+
         $surveyanswer = SurveyAnswer::findOrFail($id);
         $surveyanswer->update($requestData);
 
@@ -140,10 +139,6 @@ class SurveyAnswerController extends Controller
 
     public function loadSurvey($id)
     {
-
-
-
-
         //podaci za anketu
         $survey = Survey::findOrFail($id);
         //lista pitanja za anketu
@@ -163,14 +158,14 @@ class SurveyAnswerController extends Controller
             ->get();
         dd($answers);*/
 
-        return view('admin/survey/take',compact('survey'));
+        return view('admin/survey/take', compact('survey'));
 
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
