@@ -6,6 +6,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Question;
+use App\Survey;
 use Illuminate\Http\Request;
 use Session;
 
@@ -40,7 +41,9 @@ class QuestionController extends Controller
      */
     public function create()
     {
-        return view('admin.question.create');
+        $surveys = Survey::pluck('title', 'id')->toArray();
+
+        return view('admin.question.create', compact('surveys', $surveys));
     }
 
     /**
@@ -55,9 +58,14 @@ class QuestionController extends Controller
         $this->validate($request, [
 			'question_text' => 'required'
 		]);
-        $requestData = $request->all();
+        /*$requestData = $request->all();
         
-        Question::create($requestData);
+        Question::create($requestData);*/
+        $question = new \App\Question();
+        $question->survey_id = $request->request->get('survey_id');
+        $question->question_text = $request->request->get('question_text');
+        $question->question_type = $request->request->get('question_type');
+        $question->save();
 
         Session::flash('flash_message', 'Question added!');
 

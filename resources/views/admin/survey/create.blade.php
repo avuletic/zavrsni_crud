@@ -7,9 +7,13 @@
 
             <div class="col-md-9">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Create New Survey</div>
+                    <div class="panel-heading">Dodaj novu anketu</div>
                     <div class="panel-body">
-                        <a href="{{ url('/admin/survey') }}" title="Back"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                        <a href="{{ url('/admin/survey') }}" title="Back">
+                            <button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i>
+                                Nazad
+                            </button>
+                        </a>
                         <br />
                         <br />
 

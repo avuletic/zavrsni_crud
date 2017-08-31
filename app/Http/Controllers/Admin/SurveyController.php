@@ -4,11 +4,15 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
+use App\User;
 use App\Survey;
 use Illuminate\Http\Request;
 use Session;
 use DB;
+use Illuminate\Support\Facades\Auth;
+
+
+Auth::id();
 
 class SurveyController extends Controller
 {
@@ -41,7 +45,7 @@ class SurveyController extends Controller
      */
     public function create()
     {
-        return view('admin.survey.create');
+        return view('admin.survey.create', compact('user_id'));
     }
 
     /**
@@ -54,13 +58,17 @@ class SurveyController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-			'title' => 'required|max:255' //promjenjeno sa 10 na 255
-		]);
-        $requestData = $request->all();
-        
-        Survey::create($requestData);
+            'title' => 'required|max:255',
+            'description' => 'required'
+        ]);
+        $survey = new \App\Survey();
+        $survey->user_id = \Auth::user()->id;
+        $survey->title = $request->request->get('title');
+        $survey->description = $request->request->get('description');
+        $survey->save();
 
         Session::flash('flash_message', 'Survey added!');
+
 
         return redirect('admin/survey');
     }

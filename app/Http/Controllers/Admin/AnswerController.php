@@ -6,6 +6,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Answer;
+use App\Question;
 use Illuminate\Http\Request;
 use Session;
 
@@ -39,7 +40,9 @@ class AnswerController extends Controller
      */
     public function create()
     {
-        return view('admin.answer.create');
+        $questions = Question::where('question_type', '=', 'radio')->pluck('question_text', 'id')->toArray();
+
+        return view('admin.answer.create', compact('questions', $questions));
     }
 
     /**
@@ -54,9 +57,13 @@ class AnswerController extends Controller
         $this->validate($request, [
 			'answer' => 'required'
 		]);
-        $requestData = $request->all();
+        /*$requestData = $request->all();
         
-        Answer::create($requestData);
+        Answer::create($requestData);*/
+        $answer = new \App\Answer();
+        $answer->question_id = $request->request->get('question_id');
+        $answer->answer = $request->request->get('answer');
+        $answer->save();
 
         Session::flash('flash_message', 'Answer added!');
 
